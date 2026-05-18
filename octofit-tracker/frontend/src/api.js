@@ -1,5 +1,12 @@
 export function buildApiEndpoint(resource) {
-  const codespaceName = process.env.REACT_APP_CODESPACE_NAME;
+  const viteEnv = typeof import.meta !== 'undefined' ? import.meta.env : {};
+  const processEnv = typeof process !== 'undefined' ? process.env : {};
+
+  const codespaceName =
+    viteEnv.REACT_APP_CODESPACE_NAME ||
+    viteEnv.VITE_REACT_APP_CODESPACE_NAME ||
+    processEnv.REACT_APP_CODESPACE_NAME ||
+    processEnv.VITE_REACT_APP_CODESPACE_NAME;
 
   if (codespaceName) {
     return `https://${codespaceName}-8000.app.github.dev/api/${resource}/`;
